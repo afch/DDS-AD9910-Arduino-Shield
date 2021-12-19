@@ -941,7 +941,7 @@ void LoadMain()
 }
 
 /*
- * Расчет корректировки в dBm используется только для AM модуляции, значение зависит ТОЛЬКО от глубины модуляции
+ * Calculation of the correction in dBm is used only for AM modulation, the value depends ONLY on the modulation depth
  */
 int CalcDBCorrection()
 {
