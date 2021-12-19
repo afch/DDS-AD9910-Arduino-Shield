@@ -8,7 +8,7 @@
 
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
-#include <ClickButton.h>
+#include "ClickButton.h"
 
 #include "AD9910.h"
 #include "menuclk.h"

@@ -340,7 +340,8 @@ void SaveAMWavesToRAM(uint32_t F_carrier, uint32_t F_mod, uint32_t AM_DEPH, int1
      //Rad = Deg * 0.01745; // conversion from degrees to radians RAD=DEG*Pi/180
      Rad = Deg * PI/180.0; 
      Sin = sin(Rad); // Get Sinus
-     Amplitude_AM = MaxAmplitudeValue - (((MaxAmplitudeValue * (1 + Sin)) / 2) * (AM_DEPH/100.0)); 
+//     Amplitude_AM = MaxAmplitudeValue - (((MaxAmplitudeValue * (1 + Sin)) / 2) * (AM_DEPH/100.0)); 
+     Amplitude_AM = MaxAmplitudeValue * (1+Sin*AM_DEPH/100.0) /  (1 + AM_DEPH/100.0); 
      #if DBG==1
      //Serial.print("Amplitude_AM=");
      Serial.println(Amplitude_AM);
