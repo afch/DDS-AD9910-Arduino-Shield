@@ -49,7 +49,7 @@ Key Benefits:
 * DDS AD9910 Shield has ability to generate a signal up to 600 MHz with a core overclocking up to 1.5 GHz (to suppress harmonics, it is recommended to  overclock the AD9910 for frequencies above 400 MHz).
 * Has ability to increase output power by +4 dBm when “DAC Current HI” is activated.
 
-# Switching a clock source is made by next components:
+# The switching of clock sources is performed by the following components:
 <pre>
 |-------------------------------|-----------------------------------|-----------------|
 |      Clock source             |            Capacitors             |    Resistors    |
