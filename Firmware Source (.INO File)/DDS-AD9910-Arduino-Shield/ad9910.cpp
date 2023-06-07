@@ -192,9 +192,6 @@ void DDS_Fout (uint32_t *F_OUT, int16_t Amplitude_dB, uint8_t Num_Prof)
    int Prof=Num_Prof;
    Prof=Prof-14; // address of 0 profile: 0x0E
 
-   Serial.print("Prof=");
-   Serial.println(Prof);
-   
    if (bitRead(Prof, 0)==1) HAL_GPIO_WritePin(DDS_PROFILE_0_GPIO_PORT, DDS_PROFILE_0_PIN, GPIO_PIN_SET);
     else HAL_GPIO_WritePin(DDS_PROFILE_0_GPIO_PORT, DDS_PROFILE_0_PIN, GPIO_PIN_RESET);
    if (bitRead(Prof, 1)==1) HAL_GPIO_WritePin(DDS_PROFILE_1_GPIO_PORT, DDS_PROFILE_1_PIN, GPIO_PIN_SET);
@@ -203,7 +200,6 @@ void DDS_Fout (uint32_t *F_OUT, int16_t Amplitude_dB, uint8_t Num_Prof)
     else HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_PROFILE_2_PIN, GPIO_PIN_RESET);
 
    DDS_UPDATE(); 
-   //while (1);
 }	
 
 
