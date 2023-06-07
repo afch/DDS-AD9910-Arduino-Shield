@@ -63,3 +63,51 @@ Key Benefits:
 </pre>
 
 Where V means that the component must be installed (soldered), and X - means that the component must be removed
+
+# List of Serial Port Commands:
+Starting with version 1.02, the ability to control via the serial port has been added.
+
+  F - Set Frequency in Hz (100000 - 600000000)  
+  P - Set Output Power in dBm (-72 — 0 OR -68 — +4, depending on "DAC current"
+  M - Get Model  
+  V - Get Firmware Version  
+  h - Help  
+  ; - Commands Separator  
+          
+Example:  
+  F100000;P-2  
+Set Frequency to 100 kHz, and Output Power to -2 dBm.  
+Any number of commands in any order is allowed.  
+
+# Serial Port Settings:
+
+  Speed - 115200 Bouds  
+  Data Bits - 8  
+  Stop Bits - 1  
+  Parity - No  
+  DTR - OFF  
+# Windows:
+
+An example of setting up a serial port in the Windows console:
+  <pre>
+  mode COM3 baud=115200 DTR=OFF Data=8
+  </pre>
+  
+Usage example:
+  <pre>
+  echo F100000000 > COM3
+  </pre>
+# Ubuntu 22.04:
+
+An example of setting up a serial port in the Ubuntu:
+  <pre>
+  sudo usermod -aG dialout $USER_NAME$
+  sudo chmod a+rw /dev/ttyUSB0
+  sudo stty -F /dev/ttyUSB0 115200 cs8 ixoff -hupcl -echo
+  </pre>
+  
+Usage example:
+  <pre>
+  echo "F100000000" > /dev/ttyUSB0
+  </pre>
+
