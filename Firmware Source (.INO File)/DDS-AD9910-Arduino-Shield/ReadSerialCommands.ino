@@ -1,4 +1,6 @@
 
+#define SERIAL_PACKAGE_MAX_LENGTH 20
+char SerialBuffer[SERIAL_PACKAGE_MAX_LENGTH];
 
 const char HELP_STRING [] PROGMEM = 
           "F - Set Frequency in Hz (100000 — 600000000)\n"
@@ -15,13 +17,17 @@ const char HELP_STRING [] PROGMEM =
 
 void ReadSerialCommands()
 {
+  if (!Serial.available()) return;
+  int RcvCounter=0;
+  RcvCounter = Serial.readBytesUntil('\n', SerialBuffer, 110);
+  if (RcvCounter == 0) return;
+  SerialBuffer[RcvCounter]='\0';
+
   int32_t value=0;
   char command;
 
-  if (serialbuffer.available())
-  {
-    GParser data(serialbuffer.buf, ';');
-    int commandsCounter = data.split();
+  GParser data(SerialBuffer, ';');
+  int commandsCounter = data.split();
 
     for (int i=0; i < commandsCounter; i++)
     {
@@ -83,7 +89,6 @@ void ReadSerialCommands()
 
     MakeOut();
     UpdateDisplay();
-  }
 }
 
 bool inRange(int32_t val, int32_t minimum, int32_t maximum)

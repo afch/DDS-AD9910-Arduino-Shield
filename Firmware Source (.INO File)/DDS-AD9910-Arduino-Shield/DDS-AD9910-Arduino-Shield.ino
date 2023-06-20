@@ -3,6 +3,7 @@
  *                                        *******************************************
     Для любой модуляции нужно сначала вызывать фнукцию calcBestStepRate перед PrepRegistersToSaveWaveForm,
     зачастую это так и сдлеано внутри функций SaveAMWavesToRAM и SaveFMWavesToRAM
+    v.2.15 //20.06.2023 Ускорена обработка комманд
     v.2.14 //07.06.2023 Добавлена поддержка управления через последовательный порт
     v.2.13 //06.06.2020 закончени работа над sweep (и проверено)
     v.2.12 //01.07.2020 добавлен функционал уменшаеющий установленное пользователем время для свипа, но не проверено
@@ -40,13 +41,11 @@
 */
 #include "main.h"
 #include "ad9910.h"
-#define FIRMWAREVERSION 2.14 //01.07.2020 Rel.0
+#define FIRMWAREVERSION 2.15
 
 #define LOW_FREQ_LIMIT  100000
 #define HIGH_FREQ_LIMIT  600000000
 
-#include <AsyncStream.h>
-AsyncStream<20> serialbuffer(&Serial, '\n');
 #include <GParser.h>
 
 // 0 - 20, 64 used for clock settings
@@ -226,8 +225,6 @@ void loop ()
 
   static int LastUpButtonState = 1;
   static int LastDownButtonState = 1;
-
-  char strBuffer1[10];
 
   while (1)
   {
