@@ -69,6 +69,8 @@ Starting with version 1.02, the ability to control via the serial port has been 
 
   F - Set Frequency in Hz (100000 - 600000000)  
   P - Set Output Power in dBm (-72 — 0 OR -68 — +4, depending on "DAC current"  
+  E - Enable Output  
+  D - Disable Output  
   M - Get Model  
   V - Get Firmware Version  
   h - Help  
