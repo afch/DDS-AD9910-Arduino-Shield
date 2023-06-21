@@ -7,6 +7,8 @@ const char HELP_STRING [] PROGMEM =
           "P - Set Output Power in dBm (-72 — 0 OR -68 — +4, depending on \"DAC current\")\n"
           "M - Get Model\n"
           "V - Get Firmware Version\n"
+          "E - Enable Output\n"
+          "D - Disable Output\n"
           "h - This Help\n"
           "; - Commands Separator"
           "\n"
@@ -66,6 +68,16 @@ void ReadSerialCommands()
           } else Serial.println("Power is OUT OF RANGE (" + String(lowPowerLimit) + " — " + String(highPowerLimit) + ")");
         break;
 
+        case 'D': //Firmware Version request
+          Serial.println(F("Output Disabled"));
+          digitalWrite(DDS_PWR_DWN_PIN, HIGH);
+        break;
+
+        case 'E': //Firmware Version request
+          Serial.println(F("Output Enabled"));
+          digitalWrite(DDS_PWR_DWN_PIN, LOW);
+        break;
+        
         case 'V': //Firmware Version request
           Serial.println(FIRMWAREVERSION);
           //Serial.println(value);

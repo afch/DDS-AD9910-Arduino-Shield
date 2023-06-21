@@ -3,6 +3,7 @@
  *                                        *******************************************
     Для любой модуляции нужно сначала вызывать фнукцию calcBestStepRate перед PrepRegistersToSaveWaveForm,
     зачастую это так и сдлеано внутри функций SaveAMWavesToRAM и SaveFMWavesToRAM
+    v.2.16 //21.06.2023 Добавлены команды включения и выключения выхода (E, D)
     v.2.15 //20.06.2023 Ускорена обработка комманд
     v.2.14 //07.06.2023 Добавлена поддержка управления через последовательный порт
     v.2.13 //06.06.2020 закончени работа над sweep (и проверено)
@@ -41,7 +42,7 @@
 */
 #include "main.h"
 #include "ad9910.h"
-#define FIRMWAREVERSION 2.15
+#define FIRMWAREVERSION 2.16
 
 #define LOW_FREQ_LIMIT  100000
 #define HIGH_FREQ_LIMIT  600000000
@@ -141,9 +142,6 @@ void setup()
   display.clearDisplay();
   DisplayHello();
   delay(2000);
-
-  //DisplayMessage("SWEEP", "Too High Frequency");
-  //delay(1500);
 
   Serial.begin(115200);
 

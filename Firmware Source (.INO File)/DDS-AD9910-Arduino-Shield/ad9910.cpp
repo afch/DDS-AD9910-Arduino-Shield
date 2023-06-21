@@ -98,8 +98,6 @@ void DDS_GPIO_Init(void)
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_DRHOLD_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_DRCTL_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_PWR_DWN_PIN, GPIO_PIN_RESET);
-
-	 
 }
 
 /******************************************************************************
