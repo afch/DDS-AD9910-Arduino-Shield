@@ -68,7 +68,7 @@ Where V means that the component must be installed (soldered), and X - means tha
 Starting with version 1.02, the ability to control via the serial port has been added.
 
   F - Set Frequency in Hz (100000 — 600000000)  
-  P - Set Output Power in dBm (-72 — 0 OR -68 — +4, depending on "DAC current"  
+  P - Set Output Power in dBm (-72 — 0 or -68 — +4, depending on "DAC current")  
   E - Enable Output  
   D - Disable Output  
   M - Get Model  
