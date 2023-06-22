@@ -71,11 +71,13 @@ void ReadSerialCommands()
         case 'D': //Firmware Version request
           Serial.println(F("Output Disabled"));
           digitalWrite(DDS_PWR_DWN_PIN, HIGH);
+          isPWR_DWN = true;
         break;
 
         case 'E': //Firmware Version request
           Serial.println(F("Output Enabled"));
           digitalWrite(DDS_PWR_DWN_PIN, LOW);
+          isPWR_DWN = false;
         break;
         
         case 'V': //Firmware Version request

@@ -3,6 +3,7 @@
  *                                        *******************************************
     Для любой модуляции нужно сначала вызывать фнукцию calcBestStepRate перед PrepRegistersToSaveWaveForm,
     зачастую это так и сдлеано внутри функций SaveAMWavesToRAM и SaveFMWavesToRAM
+    v.2.17 //22.06.2023 Отображение на экране состояния выхода - OFF, если выключен
     v.2.16 //21.06.2023 Добавлены команды включения и выключения выхода (E, D)
     v.2.15 //20.06.2023 Ускорена обработка комманд
     v.2.14 //07.06.2023 Добавлена поддержка управления через последовательный порт
@@ -42,7 +43,7 @@
 */
 #include "main.h"
 #include "ad9910.h"
-#define FIRMWAREVERSION 2.16
+#define FIRMWAREVERSION 2.17
 
 #define LOW_FREQ_LIMIT  100000
 #define HIGH_FREQ_LIMIT  600000000
@@ -133,7 +134,9 @@
 int M, K, H, A, MenuPos;
 int DBCorrection = 0;
 
-uint32_t kley;
+//uint32_t kley;
+
+bool isPWR_DWN = false;
 
 void setup()
 {
@@ -381,7 +384,8 @@ void UpdateDisplay()
   display.setTextColor(WHITE); // Draw white text
   display.setCursor(0, 16);     // Start at top-left corner
 
-  display.println(F("Frequency, [Hz]:"));
+  display.print(F("Frequency, [Hz]:"));
+  if (isPWR_DWN) display.print(F(" OFF"));
 
   display.setTextSize(2);      // Normal 1:1 pixel scale
   if (MenuPos == 0) display.setTextColor(BLACK, WHITE);
