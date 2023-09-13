@@ -134,8 +134,6 @@
 int M, K, H, A, MenuPos;
 int DBCorrection = 0;
 
-//uint32_t kley;
-
 bool isPWR_DWN = false;
 
 void setup()

@@ -68,13 +68,13 @@ void ReadSerialCommands()
           } else Serial.println("Power is OUT OF RANGE (" + String(lowPowerLimit) + " — " + String(highPowerLimit) + ")");
         break;
 
-        case 'D': //Firmware Version request
+        case 'D': 
           Serial.println(F("Output Disabled"));
           digitalWrite(DDS_PWR_DWN_PIN, HIGH);
           isPWR_DWN = true;
         break;
 
-        case 'E': //Firmware Version request
+        case 'E': 
           Serial.println(F("Output Enabled"));
           digitalWrite(DDS_PWR_DWN_PIN, LOW);
           isPWR_DWN = false;
