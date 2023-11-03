@@ -1,1 +1,0 @@
-Mega(ATMEGA2560);atmega2560;stk500v2;115200;
