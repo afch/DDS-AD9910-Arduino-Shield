@@ -87,10 +87,15 @@ void DDS_GPIO_Init(void)
      
 
   /*Configure GPIO pin Output Level */
+  HAL_Delay(50);
   HAL_GPIO_WritePin(DDS_IO_UPDATE_GPIO_PORT, DDS_IO_UPDATE_PIN, GPIO_PIN_RESET);
+  HAL_Delay(50);
 	HAL_GPIO_WritePin(DDS_MASTER_RESET_GPIO_PORT, DDS_MASTER_RESET_PIN, GPIO_PIN_RESET);
+  HAL_Delay(50);
 	HAL_GPIO_WritePin(DDS_SPI_CS_GPIO_PORT, DDS_SPI_CS_PIN, GPIO_PIN_RESET);
+  HAL_Delay(50);
 	HAL_GPIO_WritePin(DDS_OSK_GPIO_PORT, DDS_OSK_PIN, GPIO_PIN_RESET);                     // OSK = 0
+  HAL_Delay(50);
 	HAL_GPIO_WritePin(DDS_PROFILE_0_GPIO_PORT, DDS_PROFILE_0_PIN, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(DDS_PROFILE_1_GPIO_PORT, DDS_PROFILE_1_PIN, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_PROFILE_2_PIN, GPIO_PIN_RESET);
@@ -98,6 +103,7 @@ void DDS_GPIO_Init(void)
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_DRHOLD_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_DRCTL_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(DDS_PROFILE_2_GPIO_PORT, DDS_PWR_DWN_PIN, GPIO_PIN_RESET);
+  HAL_Delay(50);
 }
 
 /******************************************************************************
@@ -622,7 +628,7 @@ void DDS_Init(bool PLL, bool Divider, uint32_t Ref_Clk)
       /******************* External Oscillator TCXO 3.2 - 60 MHz ***********************************************/ 
       HAL_GPIO_WritePin(DDS_SPI_CS_GPIO_PORT, DDS_SPI_CS_PIN, GPIO_PIN_RESET);    
       strBuffer[0] = CFR3_addr;
-      if (DDS_Core_Clock<=1000000000) strBuffer[1] = VCO3;
+      if (DDS_Core_Clock<1000000000) strBuffer[1] = VCO4; // bilo VCO3
         else strBuffer[1] = VCO5;  // | DRV0_REFCLK_OUT_High_output_current;
       strBuffer[2] = Icp387uA;   // Icp212uA, Icp237uA, Icp262uA, Icp287uA, Icp312uA, Icp337uA, Icp363uA, Icp387uA 
       strBuffer[3] = REFCLK_input_divider_ResetB | PLL_enable; // REFCLK_input_divider_bypass; //
