@@ -19,19 +19,13 @@ Sweep, DRG (Digital Ramp Generator), RAM, AM, FM modulation
 
 Key Benefits:
 
-*Low harmonics no more than -60dB. An output RF transformer is used for the correct operation of the current mirror.
-
-*Small spur
-
-*4 layer board. Signal lines TOP and Bottom, inner layers Ground and Power.
-
-*Low Noise LDO Stabilizers
-
-*Separate power supply for all analog and digital lines (1.8 and 3.3V), 5pcs IC voltage stabilizers are used. Additionally, there is an RF Ferrite bead interchange.
-
-*High-speed decoupling Level converter and TTL 5V matching
-
-*one of 4 types of clock source can be used/installed:
+*Low harmonics no more than -60dB. An output RF transformer is used for the correct operation of the current mirror.  
+*Small spur  
+*4 layer board. Signal lines TOP and Bottom, inner layers Ground and Power.  
+*Low Noise LDO Stabilizers  
+*Separate power supply for all analog and digital lines (1.8 and 3.3V), 5pcs IC voltage stabilizers are used. Additionally, there is an RF Ferrite bead interchange.  
+*High-speed decoupling Level converter and TTL 5V matching  
+*One of 4 types of clock source can be used/installed:  
 
 1. XO - Crystal 25Mhz 20ppm internal oscillator with PLL at 1 GHz,
 2. TCXO - 10Mhz 1ppm external oscillator PLL at 1 GHz,
