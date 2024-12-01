@@ -44,7 +44,21 @@ Key Benefits:
 
 # The switching of clock sources
 
+The switching of clock sources is performed through the clock menu and is handled by an onboard switch. It does not require installing or removing any components on the board to switch between any clock sources except the XO (Crystal Oscillator).
 
+For clocking from the XO (Crystal Oscillator), in addition to activating the corresponding setting in the software menu, the installation of several components will also be required. See the table below:
+
+<pre>
+|-------------------------------|--------------------|-----------------|
+|      Clock source             |      Capacitors    |    Resistors    |
+|   (only one at a time)        |  C18,C19 | C14,C17 |   XO  |   REF   |
+|----------------------------------------------------------------------|
+| XO - Crystal Oscillator (Z1)  |    V     |    X    |   V   |    X    |
+| TCXO, Ext. TCXO/OCXO, Ext OSC |    X     |    V    |   X   |    V    |
+|----------------------------------------------------------------------|
+</pre>
+
+Where V means that the component must be installed (soldered), and X - means that the component must be removed
 
 # List of Serial Port Commands:
 Starting with software version 2.14, the ability to control via the serial port has been added.
