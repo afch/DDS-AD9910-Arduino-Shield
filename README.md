@@ -1,4 +1,4 @@
-# DDS-AD9910-Arduino-Shield (Software Version 2.x)
+# DDS-AD9910-Arduino-Shield (Hardware Version 2.x)
 DDS (Direct Digital Synthesis) Analog Devices AD9910 Arduino Shield by GRA &amp; AFCH
 
 Web-site: https://gra-afch.com
