@@ -46,7 +46,7 @@ Key Benefits:
 
 # The switching of clock sources
 
-The switching of clock sources is performed through the clock menu and is handled by an onboard software-controlled commutator. It does not require installing or removing any components on the board to switch between any clock sources except the XO (Crystal Oscillator).
+The switching of clock sources is performed through the clock menu and is handled by an onboard software-controlled switch. It does not require installing or removing any components on the board to switch between any clock sources except the XO (Crystal Oscillator).
 
 For clocking from the XO (Crystal Oscillator), in addition to activating the corresponding setting in the software menu, the installation of several components will also be required. See the table below:
 
