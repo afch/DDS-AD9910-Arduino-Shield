@@ -3,6 +3,7 @@
  *                                        *          ONLY FOR Version 3.5           *
  *                                        *******************************************
  *                                                (ТОЛЬКО ДЛЯ ПЛАТ ВЕРСИИ 3.5)
+ *  v.3.19 //10.02.2025 Исправлена ошибка которая не позволяла регулировать частоту после достижения одного из лимитов
  *  v.3.18 //23.09.2024 Добавлены коммандды через UART (Serial), инвертирована внутренняя логика работы кнопки ON/OFF
  *  v.3.17 //18.09.2024 Улучшена стабильность при включении (подаче питания)
  *  v.3.16 //16.09.2024 Добавлено новое значение частоты TCXO - 62.5 МГц
@@ -61,7 +62,7 @@
 #include "ad9910.h"
 #include "GyverTimers.h"
 #include <GParser.h>
-#define FIRMWAREVERSION 3.18
+#define FIRMWAREVERSION 3.19
 
 Encoder myEnc(B_PIN, A_PIN);
 
@@ -376,7 +377,7 @@ void loop ()
     if (modeButton.clicks < 0) DDS_Clock_Config_Menu(); // long click button encoder
 /**************************************************************************/
 
-    if (RFOutButton.clicks > 0) // short click button encoder
+    if (RFOutButton.clicks > 0) // short click 
     {
       isPWR_DWN = !isPWR_DWN;
       if (isPWR_DWN) digitalWrite(DDS_PWR_DWN_PIN, HIGH);
@@ -423,13 +424,13 @@ void loop ()
         //Serial.print("curPos=");
         //Serial.println(curPos);
         if (MenuPos == 0) {
-          if (Check(M - curPos, K, H)) M = Dec(M, curPos);
+          if (Check(M + curPos, K, H)) M = Dec(M, curPos);
         }
         if (MenuPos == 1) {
-          if (Check(M, K - curPos, H)) K = Dec(K, curPos);
+          if (Check(M, K + curPos, H)) K = Dec(K, curPos);
         }
         if (MenuPos == 2) {
-          if (Check(M, K, H - curPos)) H = Dec(H, curPos);
+          if (Check(M, K, H + curPos)) H = Dec(H, curPos);
         }
         if (MenuPos == 3)
         {
