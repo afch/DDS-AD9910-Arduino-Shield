@@ -1,8 +1,9 @@
-/*                                        *******************************************
+ /*                                        *******************************************
  *                                        *             GRA-AFCH.COM                *
- *                                        *          ONLY FOR Version 3.5           *
+ *                                        *          ONLY FOR Version 3.5+           *
  *                                        *******************************************
- *                                                (ТОЛЬКО ДЛЯ ПЛАТ ВЕРСИИ 3.5)
+ *                                                (ТОЛЬКО ДЛЯ ПЛАТ ВЕРСИИ 3.5+)
+ *  v.3.20 //11.04.2025 Исправлена ошибка когда параметры не применялись после выключения и включения выхода, если они были изменены в этот период
  *  v.3.19 //10.02.2025 Исправлена ошибка которая не позволяла регулировать частоту после достижения одного из лимитов
  *  v.3.18 //23.09.2024 Добавлены коммандды через UART (Serial), инвертирована внутренняя логика работы кнопки ON/OFF
  *  v.3.17 //18.09.2024 Улучшена стабильность при включении (подаче питания)
@@ -62,7 +63,7 @@
 #include "ad9910.h"
 #include "GyverTimers.h"
 #include <GParser.h>
-#define FIRMWAREVERSION 3.19
+#define FIRMWAREVERSION 3.20
 
 Encoder myEnc(B_PIN, A_PIN);
 
@@ -380,8 +381,8 @@ void loop ()
     if (RFOutButton.clicks > 0) // short click 
     {
       isPWR_DWN = !isPWR_DWN;
-      if (isPWR_DWN) digitalWrite(DDS_PWR_DWN_PIN, HIGH);
-        else digitalWrite(DDS_PWR_DWN_PIN, LOW);
+      if (isPWR_DWN) TurnDDSPowerOFF(); //digitalWrite(DDS_PWR_DWN_PIN, HIGH);
+        else TurnDDSPowerON();//digitalWrite(DDS_PWR_DWN_PIN, LOW);
     }
 
 /********************Menu Moving Cursor **************************************/
@@ -995,3 +996,19 @@ void readRegs()
 }
 
 #endif
+
+void TurnDDSPowerOFF()
+{
+  Serial.println(F("Output Disabled"));
+  digitalWrite(DDS_PWR_DWN_PIN, HIGH);
+  isPWR_DWN = true;
+}
+
+void TurnDDSPowerON()
+{
+  Serial.println(F("Output Enabled"));
+  digitalWrite(DDS_PWR_DWN_PIN, LOW);
+  delay(500);
+  MakeOut();
+  isPWR_DWN = false;
+}
