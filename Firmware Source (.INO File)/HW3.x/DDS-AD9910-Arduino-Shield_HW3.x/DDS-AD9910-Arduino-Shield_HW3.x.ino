@@ -1,8 +1,13 @@
- /*                                        *******************************************
- *                                        *             GRA-AFCH.COM                *
- *                                        *          ONLY FOR Version 3.5+           *
- *                                        *******************************************
+ /*                                       ********************************************
+ *                                        *             GRA-AFCH.COM                 *
+ *                                        *          ONLY FOR Version 3.5+           *    
+ *                                        ********************************************
  *                                                (ТОЛЬКО ДЛЯ ПЛАТ ВЕРСИИ 3.5+)
+ *  v.3.22 //050925    
+          изменине амплитуды отделено от изменения всего остального для FM модуляции (как через энкодер, так и через комманды сериал порта) 
+          добавлены две задержки по 100 мс после записи FM в RAM
+          добавлено RAM_Enable = 0 перед записью новых значений.
+ *  v.3.21 //01.05.2025 добавлена коррекция отображаемого на дисплее значения dBm
  *  v.3.20 //11.04.2025 Исправлена ошибка когда параметры не применялись после выключения и включения выхода, если они были изменены в этот период
  *  v.3.19 //10.02.2025 Исправлена ошибка которая не позволяла регулировать частоту после достижения одного из лимитов
  *  v.3.18 //23.09.2024 Добавлены коммандды через UART (Serial), инвертирована внутренняя логика работы кнопки ON/OFF
@@ -63,7 +68,7 @@
 #include "ad9910.h"
 #include "GyverTimers.h"
 #include <GParser.h>
-#define FIRMWAREVERSION 3.20
+#define FIRMWAREVERSION "3.22"
 
 Encoder myEnc(B_PIN, A_PIN);
 
@@ -443,10 +448,11 @@ void loop ()
     }
 
 /**************************************************************************/
-    if (curPos != 0) 
+    if ((curPos != 0) &&
+        (EditMode == true)) //dev
     {
       SaveMainSettings();
-      MakeOut(); // <-- сделать задержку для AM и FM модуляции и для сохранения настроек!!!!!!
+      MakeOut(); // <-- сделать задержку для AM и FM модуляции и для сохранения настроек, алгоритм взять из modulationmenu.ino (начало в строке 4)!!!!!!
     }
 
     //UpdateDisplay();
@@ -458,7 +464,7 @@ void loop ()
 /************
    MakeOut - решает какую из функци генерации выбрать (в зависимости от значения ModIndex)
  ********/
-void MakeOut()
+void MakeOut(char command='\0')
 { 
   StopSCurve();
   switch (ModIndex)
@@ -471,7 +477,10 @@ void MakeOut()
       SaveAMWavesToRAM(M * 1000000L + K * 1000L + H, MFreqK * 1000L + MFreqH, AMDepth, A * -1);
       break;
     case FM_MOD_TYPE: // FM частотная модуляция
-      SaveFMWavesToRAM(M * 1000000L + K * 1000L + H, MFreqK * 1000L + MFreqH, FMDevK * 1000L + FMDevH);
+      if ((MenuPos == 3) || (command == 'P')) //Amplitude /*DEV*/
+        PlaybackFMFromRAM(A*-1); //dev
+        else //dev
+          SaveFMWavesToRAM(M * 1000000L + K * 1000L + H, MFreqK * 1000L + MFreqH, FMDevK * 1000L + FMDevH);
       break;
     case SWEEP_MOD_TYPE:
       Sweep(GetSweepStartFreq(), GetSweepEndFreq(), SweepTime, SweepTimeFormat);
@@ -501,7 +510,7 @@ void DisplayHello()
   display.setCursor(62, 0);
   display.print("Firmware");
   display.setCursor(62, 8);
-  display.print("ver.: ");
+  display.print("ver.:");
   display.print(FIRMWAREVERSION);
   display.setCursor(0, 16);
 

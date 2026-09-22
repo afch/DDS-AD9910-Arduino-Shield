@@ -104,7 +104,7 @@ void ReadSerialCommands()
       } //switch
     } //for
 
-    MakeOut();
+    MakeOut(command);
     //UpdateDisplay();
     //needsUpdateDisplay = true;
 }

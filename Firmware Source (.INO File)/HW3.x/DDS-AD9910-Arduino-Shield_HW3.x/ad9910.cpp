@@ -229,17 +229,17 @@ void PrepRegistersToSaveWaveForm (uint64_t Step_Rate, uint16_t Step)
   strBuffer[4] = highByte(Step); //0xF9;  // End RAM address [9:2] bits in register 15:8 bit 0x1F 1024   (0xC0 + 0xF9) 0.....999 = 1000
   strBuffer[5] = lowByte(Step); //0xC0;  // End RAM address [1:0] bits in register 7:6 bit  0xC0 
 
-  Serial.print("highByte((uint16_t)Step_Rate)=");
-  Serial.println(highByte((uint16_t)Step_Rate));
+  // Serial.print("highByte((uint16_t)Step_Rate)=");
+  // Serial.println(highByte((uint16_t)Step_Rate));
 
-  Serial.print("lowByte((uint16_t)Step_Rate)=");
-  Serial.println(lowByte((uint16_t)Step_Rate));
+  // Serial.print("lowByte((uint16_t)Step_Rate)=");
+  // Serial.println(lowByte((uint16_t)Step_Rate));
 
-  Serial.print("highByte(Step)=");
-  Serial.println(highByte(Step));
+  // Serial.print("highByte(Step)=");
+  // Serial.println(highByte(Step));
 
-  Serial.print("lowByte(Step)=");
-  Serial.println(lowByte(Step));
+  // Serial.print("lowByte(Step)=");
+  // Serial.println(lowByte(Step));
 
    
   strBuffer[6] = 0x00;  // Start RAM address [9:2] bits in register 15:8 bit
@@ -453,6 +453,17 @@ void SaveFMWavesToRAM (uint32_t F_carrier, uint32_t F_mod, uint32_t F_dev)
   calcBestStepRate(&Step, &Step_Rate, F_mod);
       
   PrepRegistersToSaveWaveForm(Step_Rate, Step);
+  //*** RAM Disable ***
+  HAL_GPIO_WritePin(DDS_SPI_CS_GPIO_PORT, DDS_SPI_CS_PIN, GPIO_PIN_RESET);    
+  strBuffer[0] = CFR1_addr;
+  strBuffer[1] = 0; // RAM Disable
+  strBuffer[2] = 0;//Inverse_sinc_filter_enable;//0;//
+  strBuffer[3] = 0;//OSK Disable
+  strBuffer[4] = SDIO_input_only ;
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)strBuffer, 5, 1000);
+  HAL_GPIO_WritePin(DDS_SPI_CS_GPIO_PORT, DDS_SPI_CS_PIN, GPIO_PIN_SET);  
+  DDS_UPDATE();
+  //********RAM Disable END**********
 
   DegIncrement=360.0/Step;
   //*************************************************************************
@@ -493,8 +504,10 @@ void SaveFMWavesToRAM (uint32_t F_carrier, uint32_t F_mod, uint32_t F_dev)
      Deg = Deg + DegIncrement; 
     }
     HAL_GPIO_WritePin(DDS_SPI_CS_GPIO_PORT, DDS_SPI_CS_PIN, GPIO_PIN_SET);
+    delay(100); //test
     DDS_UPDATE();
-     Serial.println("FM wave saved to RAM...");
+    Serial.println("FM wave saved to RAM...");
+    delay(100); //test
     PlaybackFMFromRAM(A*-1);
 }
 

@@ -90,18 +90,28 @@ void DrawMainMenu()
     else display.setTextColor(WHITE);
   if (ModIndex != AM_MOD_TYPE) DBCorrection = 0;
     else DBCorrection = CalcDBCorrection();
-  if (DACCurrentIndex == 0)
-  {
-    if ((A + DBCorrection) > 0) display.print(F("-"));
-    display.setCursor(12, 50);
-    display.print(PreZero2(abs(A + DBCorrection)));
-  } else
-  {
-    if ((-1 * A + 4 - DBCorrection) > 0) display.print(F("+"));
-    else if ((-1 * A + 4 - DBCorrection) < 0) display.print(F("-"));
-    display.setCursor(12, 50);
-    display.print(PreZero(abs(-1 * A + 4 - DBCorrection)));
-  }
+
+  int8_t DisplayedDBValue = A + DBCorrection - round(GetOutputdBCorrection(M));
+  if (DACCurrentIndex == 1) DisplayedDBValue = DisplayedDBValue - 4;
+  if (DisplayedDBValue > 0) display.print(F("-"));
+    else if (DisplayedDBValue < 0) display.print(F("+"));
+      //else display.print(F(" "));
+  
+  display.setCursor(12, 50);
+  display.print(PreZero2(abs(DisplayedDBValue)));
+
+  // if (DACCurrentIndex == 0)
+  // {
+  //   if ((A + DBCorrection) > 0) display.print(F("-"));
+  //   display.setCursor(12, 50);
+  //   display.print(PreZero2(abs(A + DBCorrection)));
+  // } else
+  // {
+  //   if ((-1 * A + 4 - DBCorrection) > 0) display.print(F("+"));
+  //   else if ((-1 * A + 4 - DBCorrection) < 0) display.print(F("-"));
+  //   display.setCursor(12, 50);
+  //   display.print(PreZero(abs(-1 * A + 4 - DBCorrection)));
+  // }
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(36, 56);

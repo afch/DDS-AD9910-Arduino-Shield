@@ -38,7 +38,7 @@
 
 void DisplaySaved(void);
 void UpdateDisplay();
-void MakeOut();
+void MakeOut(char command='\0');
 
 void SingleProfileFreqOut(uint32_t freq_output, int16_t Amplitude_dB_output);
 bool IsSweepTimeTooLong();
